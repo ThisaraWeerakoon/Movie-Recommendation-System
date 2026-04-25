@@ -1,0 +1,9 @@
+# Build outputs
+/ui
+/bench
+/movie_rec
+/a.out
+*.o
+
+# Intel VTune result directories
+vtune_*/
