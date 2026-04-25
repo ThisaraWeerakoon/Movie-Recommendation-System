@@ -1,7 +1,7 @@
+#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 #include "recommender.h"
 #include "utility_matrix.h"
 #include "matrix_normalization.h"
@@ -25,7 +25,11 @@ int main(int argc, char **argv) {
         return 2;
     }
 
-    clock_t t0 = clock();
+    struct timespec wall0, wall1;
+    if (clock_gettime(CLOCK_MONOTONIC, &wall0) != 0) {
+        perror("clock_gettime");
+        return 1;
+    }
 
     int No_of_users = findusers();
     const int No_of_movies = 9125;
@@ -55,9 +59,17 @@ int main(int argc, char **argv) {
         }
     }
 
-    clock_t t1 = clock();
-    double secs = (double)(t1 - t0) / CLOCKS_PER_SEC;
-    printf("bench: uids=[%d..%d] repeats=%d elapsed=%.3f seconds\n", start_uid, end_uid, repeats, secs);
+    if (clock_gettime(CLOCK_MONOTONIC, &wall1) != 0) {
+        perror("clock_gettime");
+        free(utility_matrix);
+        free(normalized_matrix);
+        return 1;
+    }
+    /* Wall time: clock() sums CPU time across threads and is misleading with OpenMP. */
+    double secs = (double)(wall1.tv_sec - wall0.tv_sec)
+        + (double)(wall1.tv_nsec - wall0.tv_nsec) * 1e-9;
+    printf("bench: uids=[%d..%d] repeats=%d elapsed_wall=%.3f seconds\n",
+           start_uid, end_uid, repeats, secs);
 
     free(utility_matrix);
     free(normalized_matrix);
