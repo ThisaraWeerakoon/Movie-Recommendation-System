@@ -6,9 +6,12 @@ LDLIBS ?= -lm
 
 SRC_COMMON = kmeans.c matrix_normalization.c pearsons.c predictions.c recommender.c sorting.c utility_matrix.c
 
-.PHONY: all clean prof perf-bench
+.PHONY: all clean prof perf-bench bench-grid
 
-all: ui bench
+all: ui bench bench-grid
+
+bench-grid: bench_grid.c $(SRC_COMMON)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ bench_grid.c $(SRC_COMMON) $(LDFLAGS) $(LDLIBS)
 
 ui: ui.c $(SRC_COMMON)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -o $@ ui.c $(SRC_COMMON) $(LDFLAGS) $(LDLIBS)
@@ -26,5 +29,5 @@ perf-bench: bench
 	perf stat -e cycles,instructions,cache-references,cache-misses,LLC-loads,LLC-load-misses -d ./bench 1 100 2
 
 clean:
-	rm -f ui bench a.out
+	rm -f ui bench bench-grid a.out
 

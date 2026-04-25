@@ -1,6 +1,7 @@
 # Build outputs
 /ui
 /bench
+/bench-grid
 /movie_rec
 /a.out
 *.o
