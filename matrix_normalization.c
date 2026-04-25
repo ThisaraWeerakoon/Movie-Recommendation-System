@@ -34,7 +34,7 @@ void normalize_matrix(double *utility_matrix, double *normalized_matrix, int No_
 	}
 }
 
-void normalize(double *user, double *normalizeduser, int No_of_movies){ //inputs: rating vector of new user and new vector to save normalized ratings
+void normalize(const double *user, double *normalizeduser, int No_of_movies){ //inputs: rating vector of new user and new vector to save normalized ratings
 	int i=0, count = 0;
 	double sum=0, average=0;
 	

@@ -54,8 +54,6 @@ int assignuid(){
     j=0;
     }
     fclose(fstream);
-    free(line);
-    free(record);
     return max+1;
 }
 void getmovies(int uid){
@@ -91,8 +89,6 @@ void getmovies(int uid){
     fclose(fstream);
 	free(movienames);
 	free(moviegenres);
-    free(line);
-    free(record);
 }
 
 void main(){

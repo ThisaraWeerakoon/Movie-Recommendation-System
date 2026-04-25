@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<math.h>
 
-double pearson_correlation(double *A, double *B, unsigned int size){
+double pearson_correlation(const double *A, const double *B, unsigned int size){
     double dot_p=0.0;
     double mag_a=0.0;
     double mag_b=0.0;
@@ -16,19 +16,10 @@ double pearson_correlation(double *A, double *B, unsigned int size){
     return dot_p/(sqrt(mag_a)*sqrt(mag_b));
 }
 
-void calc_similarity(double *normalizeduser, double *normalized_matrix, double *similarity, int No_of_users, int No_of_movies){
-	int i=0,j=0;
+void calc_similarity(double *normalizeduser, const double *normalized_matrix, double *similarity, int No_of_users, int No_of_movies){
+	int i=0;
 	for(i=0;i<No_of_users;i++){ //traverse through each user
-		double *A;
-		A = (double *)malloc(sizeof(double) * No_of_movies);
-		
-		//get rating vector for that user
-		for(j=0; j<No_of_movies; j++){
-			A[j] = normalized_matrix[i*No_of_movies + j];
-		}
-		
-		//find similarity between new user and ith user
-		similarity[i] = pearson_correlation(normalizeduser,A,No_of_movies);
-		free(A);
+		// find similarity between new user and ith user (avoid per-user malloc/copy)
+		similarity[i] = pearson_correlation(normalizeduser, &normalized_matrix[i*No_of_movies], No_of_movies);
 	}
 }
