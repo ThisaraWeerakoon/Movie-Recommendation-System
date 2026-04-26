@@ -3,7 +3,7 @@
 #define PREDICTIONS_H
 
 int make_prediction(
-					double *user, //new  user ratings defiend as double *user = (double *)malloc(sizeof(double) * No_of_movies); 
+					const double *user, //new  user ratings defiend as double *user = (double *)malloc(sizeof(double) * No_of_movies); 
 					
 					int *similar_users, //ids of all similar users based on clustering
 					
@@ -11,7 +11,7 @@ int make_prediction(
 					
 					double *similarity, //similarity with all the existing user
 					
-					double *utility_matrix, //utility matrix
+					const double *utility_matrix, //utility matrix
 					
 					int *recommended_movies, //list of recommended movies to be saved in
 					
@@ -21,11 +21,11 @@ int make_prediction(
 					); //returns number of recommended movies
 					
 void test_predictions(
-					  double *user, 
+					  const double *user, 
 					  int *similar_users, 
 					  int no_of_susers, 
 					  double *similarity, 
-					  double *utility_matrix, 
+					  const double *utility_matrix, 
 					  double *predicted_ratings,
 					  int No_of_movies
 					  );

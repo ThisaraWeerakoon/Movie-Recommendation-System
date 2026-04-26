@@ -13,7 +13,7 @@ void normalize_matrix(
 					  );
 					  
 void normalize( //normalizes ratings of new user(1D array)
-			   double *user, // defined as double *user = malloc(sizeof(double) * No_of_movies); contains ratings from the new user.
+			   const double *user, // defined as double *user = malloc(sizeof(double) * No_of_movies); contains ratings from the new user.
 			   
 			   double *normalizeduser, // defined as double *normalizeduser = malloc(sizeof(double) * No_of_movies); contains normalized ratings of the new user.
 			   

@@ -14,7 +14,7 @@
 
 void fail(char *str)
   {
-    printf(str);
+    printf("%s", str);
     exit(-1);
   }
 
@@ -124,7 +124,7 @@ void calc_cluster_centroids(int dim, int n, int k, double *X, int *cluster_assig
     for (ii = 0; ii < k; ii++)
       {
         if (cluster_member_count[ii] == 0)
-          printf("WARNING: Empty cluster %d! \n", ii);
+          fprintf(stderr, "WARNING: Empty cluster %d! \n", ii);
 
        // for each dimension
         for (jj = 0; jj < dim; jj++)
